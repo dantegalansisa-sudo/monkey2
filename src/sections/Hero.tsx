@@ -37,6 +37,12 @@ export default function Hero({ ready }: { ready: boolean }) {
     return () => clearTimeout(id);
   }, [i, ready, paused]);
 
+  useEffect(() => {
+    const n = bySlug(SLIDES[(i + 1) % SLIDES.length].slug)!;
+    const img = new Image();
+    img.src = n.cut ?? n.img;
+  }, [i]);
+
   const s = SLIDES[i];
   const a = bySlug(s.slug)!;
   const cat = catById(s.cat);
@@ -56,6 +62,7 @@ export default function Hero({ ready }: { ready: boolean }) {
         <span className="hero__grain" />
       </div>
 
+      <div className="hero__stage">
       <motion.div className="hero__word" style={{ y: wordY }} aria-hidden="true">
         <motion.span initial={{ y: '40%', opacity: 0 }} animate={ready ? { y: '0%', opacity: 1 } : {}} transition={{ duration: 1.1, ease: EASE.premium, delay: 0.1 }}>
           BUQUÉALO
@@ -68,9 +75,10 @@ export default function Hero({ ready }: { ready: boolean }) {
             key={a.slug}
             src={a.cut ?? a.img}
             alt={a.name}
-            initial={{ y: 80, opacity: 0, scale: 0.94, filter: 'blur(8px)' }}
-            animate={ready ? { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-            exit={{ y: -30, opacity: 0, scale: 1.03, filter: 'blur(6px)' }}
+            decoding="async"
+            initial={{ y: 70, opacity: 0, scale: 0.95 }}
+            animate={ready ? { y: 0, opacity: 1, scale: 1 } : {}}
+            exit={{ y: -24, opacity: 0, scale: 1.02 }}
             transition={{ duration: 0.9, ease: EASE.premium }}
           />
         </AnimatePresence>
@@ -80,6 +88,7 @@ export default function Hero({ ready }: { ready: boolean }) {
         <motion.span style={{ y: wordY }} initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : {}} transition={{ delay: 0.6 }}>
           BUQUÉALO
         </motion.span>
+      </div>
       </div>
 
       <motion.div className="hero__copy" style={{ opacity: fade }}>

@@ -152,18 +152,27 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     const start = performance.now();
     let raf = 0;
     const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / 1600);
+      const p = Math.min(1, (t - start) / 1100);
       setN(Math.round((1 - Math.pow(1 - p, 3)) * 100));
       if (p < 1) raf = requestAnimationFrame(tick);
-      else setTimeout(() => setVis(false), 200);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
+    // Timers (not rAF) drive the exit so a throttled or slow phone can never get stuck on the intro.
+    const hide = setTimeout(() => {
+      setN(100);
+      setVis(false);
+    }, 1250);
+    const fallback = setTimeout(onDone, 2400);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(hide);
+      clearTimeout(fallback);
+    };
+  }, [onDone]);
   return (
     <AnimatePresence onExitComplete={onDone}>
       {vis && (
-        <motion.div className="preloader" exit={{ clipPath: 'inset(0 0 100% 0)' }} transition={{ duration: 0.85, ease: EASE.premium }}>
+        <motion.div className="preloader" exit={{ y: '-100%' }} transition={{ duration: 0.7, ease: EASE.premium }}>
           <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8, ease: EASE.bounce }}>
             <Wave className="preloader__wave" />
           </motion.div>

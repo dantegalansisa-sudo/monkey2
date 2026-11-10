@@ -1,15 +1,16 @@
 import Lenis from 'lenis';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { Curtain, Footer, LINKS, Nav, Preloader, QuoteFab } from './components/Chrome';
 import { bySlug } from './data/artists';
 import { QuoteProvider } from './lib/quote';
-import Artistas from './pages/Artistas';
-import ComoFunciona from './pages/ComoFunciona';
-import Cotizar from './pages/Cotizar';
 import Home from './pages/Home';
-import Perfil from './pages/Perfil';
-import Servicios from './pages/Servicios';
+
+const Artistas = lazy(() => import('./pages/Artistas'));
+const ComoFunciona = lazy(() => import('./pages/ComoFunciona'));
+const Cotizar = lazy(() => import('./pages/Cotizar'));
+const Perfil = lazy(() => import('./pages/Perfil'));
+const Servicios = lazy(() => import('./pages/Servicios'));
 
 declare global {
   interface Window {
@@ -88,14 +89,14 @@ export default function App() {
     document.documentElement.classList.toggle('is-locked', !ready);
   }, [ready]);
 
-  const done = () => {
+  const done = useCallback(() => {
     try {
       sessionStorage.setItem('bq-intro', '1');
     } catch {
       /* storage unavailable */
     }
     setReady(true);
-  };
+  }, []);
 
   const label = location.pathname.startsWith('/artistas/')
     ? bySlug(location.pathname.split('/')[2])?.name ?? 'Artista'
@@ -107,6 +108,7 @@ export default function App() {
       {ready && location.key !== 'default' && <Curtain key={location.pathname} label={label} />}
       <Nav />
       <main>
+        <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
         <Routes>
           <Route path="/" element={<Home ready={ready} />} />
           <Route path="/artistas" element={<Artistas />} />
@@ -116,6 +118,7 @@ export default function App() {
           <Route path="/cotizar" element={<Cotizar />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
       <QuoteFab />
