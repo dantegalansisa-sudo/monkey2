@@ -159,7 +159,7 @@ function Stage({ on }: { on: Set<string> }) {
       {/* screen */}
       <motion.g {...show('pantalla')}>
         <rect x="250" y="70" width="300" height="130" rx="8" fill="url(#st-screen)" className="stage__screen" />
-        <text x="400" y="148" textAnchor="middle" className="stage__screentext">BEAT THE PARTY</text>
+        <text x="400" y="148" textAnchor="middle" className="stage__screentext">BUQUEA HOY</text>
       </motion.g>
       {/* lights */}
       <motion.g {...show('luces')}>
@@ -388,10 +388,10 @@ export function BeatBanner() {
   return (
     <section className="beat" ref={ref}>
       <motion.div className="beat__img" style={{ y }}>
-        <img src="/brand/banner.webp" alt="Beat the party — JP Events" loading="lazy" />
+        <img src="/brand/banner.webp" alt="Buquea — vive el show" loading="lazy" />
       </motion.div>
       <motion.p className="beat__word" style={{ x: x1 }} aria-hidden="true">
-        BEAT THE PARTY · BEAT THE PARTY ·
+        BUQUEA HOY · NO LO DEJES EN PLANES ·
       </motion.p>
       <div className="beat__inner">
         <div className="beat__copy">

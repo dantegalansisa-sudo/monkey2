@@ -1,4 +1,4 @@
-# Buquéalo by JP Events — Demo
+# Buquea — Demo
 
 Plataforma de booking de artistas y entretenimiento para empresas, promotores y eventos en Puerto Rico.
 

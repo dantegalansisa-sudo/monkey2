@@ -1,39 +1,44 @@
-import { useId } from 'react';
+/** Buquea's disco ball rebuilt as SVG mirror tiles so it can twinkle; plus the real logo lockup. */
+const R = 46;
+const STEP = 15;
+const PALETTE = ['#5B1AF5', '#7B4DFF', '#3FA0EF', '#22D3EE', '#C9CEDF', '#8D93A8', '#2A2F45', '#141830', '#B56BFF', '#EEF1FF'];
+const rad = (d: number) => (d * Math.PI) / 180;
+const pt = (lon: number, lat: number) => `${(50 + R * Math.cos(rad(lat)) * Math.sin(rad(lon))).toFixed(2)},${(50 - R * Math.sin(rad(lat))).toFixed(2)}`;
 
-/** JP Events waveform mark rebuilt as SVG so the bars can pulse like an audio meter. */
-const BARS = [
-  { x: 40, h: 16 }, { x: 50, h: 26 }, { x: 60, h: 38 }, { x: 70, h: 30 }, { x: 80, h: 52 },
-  { x: 140, h: 62 }, { x: 150, h: 40 }, { x: 160, h: 54 }, { x: 170, h: 34 }, { x: 180, h: 24 }, { x: 190, h: 14 },
-];
-const DOTS = [8, 18, 28, 202, 212, 222];
+const TILES: { d: string; fill: string; tw: boolean; delay: number }[] = [];
+for (let lat = -90, r = 0; lat < 90; lat += STEP, r++) {
+  for (let lon = -90, c = 0; lon < 90; lon += STEP, c++) {
+    const h = (r * 7 + c * 13 + ((r * c) % 5) * 3) % PALETTE.length;
+    TILES.push({
+      d: `${pt(lon, lat)} ${pt(lon + STEP, lat)} ${pt(lon + STEP, lat + STEP)} ${pt(lon, lat + STEP)}`,
+      fill: PALETTE[h],
+      tw: (r * 5 + c * 3) % 4 === 0,
+      delay: ((r * 37 + c * 53) % 24) / 10,
+    });
+  }
+}
 
-export default function Wave({ className = '', animated = true, mono = false }: { className?: string; animated?: boolean; mono?: boolean }) {
-  const id = useId().replace(/:/g, '');
-  const stroke = mono ? 'currentColor' : `url(#g${id})`;
+export default function Wave({ className = '', animated = true }: { className?: string; animated?: boolean; mono?: boolean }) {
   return (
-    <svg className={`wave ${animated ? 'is-anim' : ''} ${className}`} viewBox="0 0 230 100" aria-hidden="true">
+    <svg className={`disco ${animated ? 'is-anim' : ''} ${className}`} viewBox="0 0 100 100" aria-hidden="true">
       <defs>
-        <linearGradient id={`g${id}`} x1="0" x2="230" y1="0" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#3FA0EF" />
-          <stop offset="0.5" stopColor="#5B6BFF" />
-          <stop offset="1" stopColor="#5B1AF5" />
-        </linearGradient>
+        <radialGradient id="disco-shade" cx="34%" cy="28%" r="78%">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.5" />
+          <stop offset="0.35" stopColor="#fff" stopOpacity="0" />
+          <stop offset="1" stopColor="#05060c" stopOpacity="0.72" />
+        </radialGradient>
       </defs>
-      <g fill={mono ? 'currentColor' : `url(#g${id})`}>
-        {DOTS.map((x) => (
-          <circle key={x} cx={x} cy="50" r="3.6" />
+      <circle cx="50" cy="50" r={R} fill="#0a0c18" />
+      <g transform="rotate(-14 50 50)" stroke="#0a0c18" strokeWidth="0.7" strokeLinejoin="round">
+        {TILES.map((t, i) => (
+          <polygon key={i} points={t.d} fill={t.fill} className={t.tw ? 'disco__tw' : undefined} style={t.tw ? { animationDelay: `${t.delay}s` } : undefined} />
         ))}
       </g>
-      <g stroke={stroke} strokeWidth="6.5" strokeLinecap="round" fill="none">
-        {BARS.map((b, i) => (
-          <line key={b.x} x1={b.x} x2={b.x} y1={50 - b.h / 2} y2={50 + b.h / 2} className="wave__bar" style={{ animationDelay: `${(i * 113) % 700}ms` }} />
-        ))}
-        {/* J */}
-        <path d="M106 10 V66 A11 11 0 0 1 84 66" className="wave__letter" />
-        <line x1="95" x2="95" y1="30" y2="46" className="wave__bar" style={{ animationDelay: '320ms' }} />
-        {/* P */}
-        <path d="M120 90 V12 H125 A15 15 0 0 1 125 42 H120" className="wave__letter" />
-        <line x1="131" x2="131" y1="56" y2="80" className="wave__bar" style={{ animationDelay: '540ms' }} />
+      <circle cx="50" cy="50" r={R} fill="url(#disco-shade)" />
+      <g className="disco__sparks" fill="#fff">
+        <path d="M22 16 l1.6 5 5 1.6 -5 1.6 -1.6 5 -1.6 -5 -5 -1.6 5 -1.6z" style={{ animationDelay: '0.2s' }} />
+        <path d="M82 30 l1.2 3.6 3.6 1.2 -3.6 1.2 -1.2 3.6 -1.2 -3.6 -3.6 -1.2 3.6 -1.2z" style={{ animationDelay: '1.1s' }} />
+        <path d="M70 84 l1 3 3 1 -3 1 -1 3 -1 -3 -3 -1 3 -1z" style={{ animationDelay: '1.9s' }} />
       </g>
     </svg>
   );
@@ -42,11 +47,7 @@ export default function Wave({ className = '', animated = true, mono = false }: 
 export function Logo({ className = '' }: { className?: string }) {
   return (
     <span className={`logo ${className}`}>
-      <Wave className="logo__wave" />
-      <span className="logo__text">
-        <b>BUQUÉALO</b>
-        <small>by JP Events</small>
-      </span>
+      <img src="/brand/buquea-logo.webp" alt="Buquea" width={767} height={345} />
     </span>
   );
 }

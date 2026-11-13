@@ -39,7 +39,7 @@ export function Nav() {
     <>
       <motion.header className={`nav ${solid ? 'is-solid' : ''}`} animate={{ y: hidden ? -110 : 0 }} transition={{ duration: 0.4, ease: EASE.smooth }}>
         <div className="nav__inner">
-          <Link to="/" className="nav__logo" aria-label="Buquéalo — inicio">
+          <Link to="/" className="nav__logo" aria-label="Buquea — inicio">
             <Logo />
           </Link>
           <nav className="nav__links" aria-label="Principal">
@@ -132,7 +132,7 @@ export function QuoteFab() {
               <circle cx="30" cy="30" r="27" className="fab__track" />
               <motion.circle cx="30" cy="30" r="27" className="fab__prog" style={{ pathLength: ring }} />
             </svg>
-            <Wave className="fab__wave" mono />
+            <Wave className="fab__wave" />
             {items.length > 0 && (
               <motion.span key={items.length} className="fab__count" initial={{ scale: 0.4 }} animate={{ scale: 1 }} transition={{ ease: EASE.bounce }}>
                 {items.length}
@@ -176,7 +176,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
           <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8, ease: EASE.bounce }}>
             <Wave className="preloader__wave" />
           </motion.div>
-          <p className="preloader__tag">BEAT THE PARTY.</p>
+          <p className="preloader__tag">No lo dejes en planes, <b>Buquea hoy.</b></p>
           <div className="preloader__bar">
             <span style={{ transform: `scaleX(${n / 100})` }} />
           </div>
@@ -202,7 +202,7 @@ export function FinalCta() {
       <div className="final__glow" aria-hidden="true" />
       <Wave className="final__wave" />
       <motion.h2 className="final__title" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.9, ease: EASE.premium }}>
-        ¿Listo para <em>buquearlo?</em>
+        No lo dejes en planes, <em>Buquea hoy.</em>
       </motion.h2>
       <p className="final__lead">Dinos la fecha y el tipo de evento. Te enviamos disponibilidad y cotización formal en menos de 24 horas.</p>
       <div className="final__ctas">
@@ -257,10 +257,10 @@ export function Footer() {
         </div>
       </div>
       <div className="footer__giant" aria-hidden="true">
-        BUQUÉALO<span>.</span>
+        Buquea<span>.</span>
       </div>
       <div className="footer__bottom">
-        <span>© {new Date().getFullYear()} Buquéalo by JP Events · Puerto Rico</span>
+        <span>© {new Date().getFullYear()} Buquea · Puerto Rico</span>
         <button onClick={() => setShowCredits(true)}>Demo · Créditos de imágenes</button>
       </div>
       <AnimatePresence>

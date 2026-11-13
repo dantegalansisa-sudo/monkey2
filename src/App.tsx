@@ -100,7 +100,7 @@ export default function App() {
 
   const label = location.pathname.startsWith('/artistas/')
     ? bySlug(location.pathname.split('/')[2])?.name ?? 'Artista'
-    : LINKS.find((l) => l.to === location.pathname)?.label ?? 'Buquéalo';
+    : LINKS.find((l) => l.to === location.pathname)?.label ?? 'Buquea';
 
   return (
     <QuoteProvider>

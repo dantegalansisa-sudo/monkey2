@@ -11,7 +11,7 @@ const TERMS = [
   { t: 'Contrato', d: 'Contrato oficial con el artista o su management, con condiciones claras.' },
   { t: 'Depósito', d: 'Generalmente 50% para confirmar; el balance antes del evento.' },
   { t: 'Rider y hospitalidad', d: 'Validamos tarima, sonido, camerino, transporte y seguridad.' },
-  { t: 'Día del evento', d: 'Coordinador de JP Events en sitio: llegada, prueba de sonido y show a tiempo.' },
+  { t: 'Día del evento', d: 'Coordinador de Buquea en sitio: llegada, prueba de sonido y show a tiempo.' },
 ];
 
 export default function ComoFunciona() {

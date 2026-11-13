@@ -12,9 +12,9 @@ import { useQuote } from '../lib/quote';
 const SLIDES: { cat: CatId; slug: string }[] = [
   { cat: 'urbano', slug: 'arcangel' },
   { cat: 'salsa', slug: 'marc-anthony' },
-  { cat: 'merengue', slug: 'eddy-herrera' },
+  { cat: 'merengue', slug: 'olga-tanon' },
   { cat: 'bachata', slug: 'romeo-santos' },
-  { cat: 'dj', slug: 'dj-kairo' },
+  { cat: 'dj', slug: 'dj-blaze' },
 ];
 const DURATION = 4200;
 
@@ -65,7 +65,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       <div className="hero__stage">
       <motion.div className="hero__word" style={{ y: wordY }} aria-hidden="true">
         <motion.span initial={{ y: '40%', opacity: 0 }} animate={ready ? { y: '0%', opacity: 1 } : {}} transition={{ duration: 1.1, ease: EASE.premium, delay: 0.1 }}>
-          BUQUÉALO
+          Buquea
         </motion.span>
       </motion.div>
 
@@ -86,7 +86,7 @@ export default function Hero({ ready }: { ready: boolean }) {
 
       <div className="hero__word hero__word--outline" aria-hidden="true">
         <motion.span style={{ y: wordY }} initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : {}} transition={{ delay: 0.6 }}>
-          BUQUÉALO
+          Buquea
         </motion.span>
       </div>
       </div>
@@ -96,7 +96,7 @@ export default function Hero({ ready }: { ready: boolean }) {
           <span className="dot-live" /> Booking de artistas · Puerto Rico
         </motion.p>
         <motion.h1 className="hero__title" initial={{ opacity: 0, y: 30 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9, delay: 0.35, ease: EASE.premium }}>
-          El talento que tu evento necesita, <em>a un clic.</em>
+          No lo dejes en planes, <em>Buquea hoy.</em>
         </motion.h1>
         <motion.form className="hero__search" onSubmit={search} initial={{ opacity: 0, y: 20 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.55 }}>
           <Search width={20} />

@@ -41,7 +41,7 @@ export default function Cotizar() {
 
   const message = () =>
     [
-      `¡Hola JP Events! Quiero cotizar un evento con Buquéalo 🎶 (Ref. ${ref})`,
+      `¡Hola Buquea! Quiero cotizar un evento 🪩 (Ref. ${ref})`,
       '',
       artists.length ? '🎤 Artistas:' : '',
       ...artists.map((a) => `• ${bySlug(a.id)?.name}${a.format ? ` — ${a.format}` : ''}${a.date ? ` — ${a.date}` : ''}`),
@@ -64,7 +64,7 @@ export default function Cotizar() {
   const submit = (via: 'wa' | 'mail') => {
     setTouched(true);
     if (!okStep[2]) return;
-    const url = via === 'wa' ? waLink(message()) : `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Cotización Buquéalo ${ref}`)}&body=${encodeURIComponent(message())}`;
+    const url = via === 'wa' ? waLink(message()) : `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Cotización Buquea ${ref}`)}&body=${encodeURIComponent(message())}`;
     window.open(url, '_blank', 'noopener');
     setSent(ref);
   };
@@ -305,7 +305,7 @@ export default function Cotizar() {
           <div className="qsum__top">
             <Wave className="qsum__wave" />
             <div>
-              <small>Buquéalo · {ref}</small>
+              <small>Buquea · {ref}</small>
               <strong>Resumen</strong>
             </div>
           </div>
